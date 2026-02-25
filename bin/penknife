@@ -1,0 +1,61 @@
+#!/bin/bash
+
+########
+# Version
+########
+if [[ "${1}" == "--version" ]]; then
+    echo "Penknife 0.0.1 by Ben Tideswell"
+    exit 1
+fi
+
+########
+# Reset
+########
+if [[ "${1}" == "reset" ]]; then
+    rm -rf var/cache var/page_cache var/log var/tmp var/view_preprocessed \
+       var/*.lock var/*.log var/.*.lock var/*.flag var/.*.flag var/report \
+       var/picklist var/bolt/cache var/autocomplete var/*.cookie \
+       pub/static/frontend pub/static/adminhtml pub/static/_cache pub/static/deployed_version.txt pub/error_log \
+       generated/code generated/metadata \
+       error_log error.log
+fi
+
+#######
+# CSS
+#######
+if [[ "${1}" == "css" ]]; then
+     "${0}" "css.admin" && "${0}" "css.frontend"
+elif [[ "${1}" == "css.frontend" || "${1}" == "css.front" || "${1}" == "css.f" ]]; then
+    find var/view_preprocessed -name "*.*ss" -delete -print && \
+    find pub/static/frontend -name "*.css" -delete -print
+elif [[ "${1}" == "css.admin" || "${1}" == "css.a" ]]; then
+    find var/view_preprocessed -name "*.*ss" -delete -print && \
+    find pub/static/adminhtml -name "*.css" -delete -print
+fi
+
+#######
+# Cache
+#######
+if [[ "${1}" == "cache" ]]; then
+    bin/magento cache:flush
+elif [[ "${1}" == "cache.config" ]]; then
+    bin/magento cache:flush config compiled_config
+fi
+
+##############
+# Compilation
+##############
+if [[ "${1}" == "di" ]]; then
+    bin/magento setup:di:compile
+fi
+
+#######
+# Touch
+#######
+if [[ "${1}" == "touch" ]]; then
+    if [[ ! -z "${2}" ]]; then
+        DIRNAME=$(dirname "${2}")
+        mkdir -p "${DIRNAME}"
+        touch "${2}"
+    else echo "No file specified"; fi
+fi
