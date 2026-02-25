@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Magento\Framework\App\Bootstrap;
+use Symfony\Component\Console\Application;
+use FishPig\Util\Console\Command\Pool as CommandPool;
+
+require_once $_composer_autoload_path 
+    ? dirname($_composer_autoload_path) . '/../app/bootstrap.php'
+    : __DIR__ . '/../vendor/autoload.php';
+
+$objectManager = Bootstrap::create(BP, $_SERVER)->getObjectManager();
+
+$application = new Application('fishpig-util', '1.0.0');
+
+foreach ($objectManager->get(CommandPool::class)->getAll() as $command) {
+    $application->add($command);
+}
+
+exit($application->run());

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © FishPig Limited. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="FishPig\Util\Console\Command\Pool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="db.query" xsi:type="object">FishPig\Util\Console\Command\Db\QueryCommand</item>
+                <item name="backup.db" xsi:type="object">FishPig\Util\Console\Command\Backup\DbCommand</item>
+                <item name="backup.media" xsi:type="object">FishPig\Util\Console\Command\Backup\MediaCommand</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="FishPig\Util\Console\Command\Backup\DbCommand">
+        <arguments>
+            <argument name="tablesWithDataToExcludeFromBackup" xsi:type="array">
+                <item name="log_customer" xsi:type="string">log_customer</item>
+                <item name="log_quote" xsi:type="string">log_quote</item>
+                <item name="log_summary" xsi:type="string">log_summary</item>
+                <item name="log_summary_type" xsi:type="string">log_summary_type</item>
+                <item name="log_url" xsi:type="string">log_url</item>
+                <item name="log_url_info" xsi:type="string">log_url_info</item>
+                <item name="log_visitor" xsi:type="string">log_visitor</item>
+                <item name="log_visitor_info" xsi:type="string">log_visitor_info</item>
+                <item name="log_visitor_online" xsi:type="string">log_visitor_online</item>
+                <item name="report_compared_product_index" xsi:type="string">report_compared_product_index</item>
+                <item name="report_event" xsi:type="string">report_event</item>
+                <item name="report_viewed_product_aggregated_daily" xsi:type="string">report_viewed_product_aggregated_daily</item>
+                <item name="report_viewed_product_aggregated_monthly" xsi:type="string">report_viewed_product_aggregated_monthly</item>
+                <item name="report_viewed_product_aggregated_yearly" xsi:type="string">report_viewed_product_aggregated_yearly</item>
+                <item name="report_viewed_product_index" xsi:type="string">report_viewed_product_index</item>
+                <item name="catalogsearch_result" xsi:type="string">catalogsearch_result</item>
+                <item name="catalogsearch_query" xsi:type="string">catalogsearch_query</item>
+                <item name="catalogsearch_fulltext" xsi:type="string">catalogsearch_fulltext</item>
+                <item name="sales_flat_quote" xsi:type="string">sales_flat_quote</item>
+                <item name="sales_bestsellers_aggregated_yearly" xsi:type="string">sales_bestsellers_aggregated_yearly</item>
+                <item name="sales_bestsellers_aggregated_monthly" xsi:type="string">sales_bestsellers_aggregated_monthly</item>
+                <item name="sales_bestsellers_aggregated_daily" xsi:type="string">sales_bestsellers_aggregated_daily</item>
+                <item name="adminnotification_inbox" xsi:type="string">adminnotification_inbox</item>
+                <item name="catalog_product_flat_1" xsi:type="string">catalog_product_flat_1</item>
+                <item name="catalog_product_index_eav_idx" xsi:type="string">catalog_product_index_eav_idx</item>
+                <item name="catalog_product_index_price_idx" xsi:type="string">catalog_product_index_price_idx</item>
+                <item name="cataloginventory_stock_status_idx" xsi:type="string">cataloginventory_stock_status_idx</item>
+                <item name="coupon_aggregated_updated" xsi:type="string">coupon_aggregated_updated</item>
+                <item name="cron_schedule" xsi:type="string">cron_schedule</item>
+                <item name="customer_flowpassword" xsi:type="string">customer_flowpassword</item>
+                <item name="dataflow_batch_export" xsi:type="string">dataflow_batch_export</item>
+                <item name="index_event" xsi:type="string">index_event</item>
+                <item name="index_process_event" xsi:type="string">index_process_event</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="FishPig\Util\Console\Command\Backup\MediaCommand">
+        <arguments>
+            <argument name="ignoredBackupPaths" xsi:type="array">
+                <item name="catalog-product-cache" xsi:type="string">catalog/product/cache/*</item>
+                <item name="fishpig-resp" xsi:type="string">fishpig/resp/*</item>
+                <item name="fishpig-webp" xsi:type="string">fishpig/webp/*</item>
+                <item name="fishpig-wordpress" xsi:type="string">fishpig/wordpress/*</item>
+                <item name="tmp" xsi:type="string">tmp/*</item>
+                <item name="htaccess-root" xsi:type="string">.htaccess</item>
+                <item name="htaccess-nested" xsi:type="string">*/.htaccess</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
