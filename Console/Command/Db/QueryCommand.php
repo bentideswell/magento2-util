@@ -79,7 +79,7 @@ class QueryCommand extends \FishPig\Util\Console\Command\AbstractCommand
                 }
 
                 $io->text(sprintf('%d row%s', count($results), count($results) === 1 ? '' : 's'));
-            } elseif ($queryType === 'DELETE') {
+            } elseif (in_array($queryType, ['DELETE', 'DROP'])) {
                 if (!$input->getOption(self::DELETE)) {
                     throw new \RuntimeException(
                         sprintf(
