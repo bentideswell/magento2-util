@@ -73,7 +73,7 @@ class QueryCommand extends \FishPig\Util\Console\Command\AbstractCommand
         $io->newLine();
         
         try {
-            if ($queryType === 'SELECT') {
+            if (in_array($queryType, ['SELECT', 'SHOW'])) {
                 if ($results = $this->connection->fetchAll($query)) {
                     $io->table(array_keys($results[0]), $results);
                 }
