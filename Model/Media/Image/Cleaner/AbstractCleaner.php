@@ -4,6 +4,9 @@
  */
 namespace FishPig\Util\Model\Media\Image\Cleaner;
 
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 abstract class AbstractCleaner implements ImageCleanerInterface
 {
     /**
@@ -33,10 +36,38 @@ abstract class AbstractCleaner implements ImageCleanerInterface
     /**
      * 
      */
-    protected function unlink(string $file): void
+    protected function keepFile(InputInterface $input, OutputInterface $output, string $file): void
     {
-        if (!unlink($file)) {
-            throw new \RuntimeException(sprintf('Unable to delete file: %s', $file));
+        if ($output->isVerbose()) {
+            $output->writeLn(' - ' . str_replace(BP . '/pub/', '', $file));
+        }
+    }
+
+    /**
+     * 
+     */
+    protected function removeFile(InputInterface $input, OutputInterface $output, string $file): void
+    {
+        $output->writeLn('* ' . str_replace(BP . '/pub/', '', $file));
+
+        if (!$input->getOption(ImageCleanerInterface::DRY_RUN)) {
+            if (!unlink($file)) {
+                throw new \RuntimeException(sprintf('Unable to delete file: %s', $file));
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    protected function moveFile(InputInterface $input, OutputInterface $output, string $file, string $targetFile): void
+    {
+        $output->writeLn('* ' . str_replace(BP . '/pub/', '', $file));
+
+        if (!$input->getOption(ImageCleanerInterface::DRY_RUN)) {
+            if (!rename($file, $targetFile)) {
+                throw new \RuntimeException(sprintf('Unable to move file: %s to %s', $file, $targetFile));
+            }
         }
     }
 }

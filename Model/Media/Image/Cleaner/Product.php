@@ -48,14 +48,10 @@ class Product extends AbstractCleaner
                     if (!is_dir($holdingFileParentPath) && !mkdir($holdingFileParentPath, 0755, true)) {
                         throw new \RuntimeException(sprintf('Unable to create directory: %s', $holdingFileParentPath));
                     }
-                    
-                    if (!$dryRun) {
-                        if (!rename($file, $holdingFile)) {
-                            throw new \RuntimeException(sprintf('Unable to move file: %s to %s', $file, $holdingFile));
-                        }
-                    }
 
-                    $output->writeln($file);
+                    $this->moveFile($input, $output, $file, $holdingFile);
+                } elseif ($output->isVerbose()) {
+                    $this->keepFile($input, $output, $file);
                 }
             }
         );
