@@ -1,7 +1,7 @@
 {
     "name": "fishpig/magento2-util",
-    "description": "Useful DB utility for Magento 2",
-    "version": "1.0.4",
+    "description": "Magento 2 swiss army knife",
+    "version": "1.0.5",
     "type": "magento2-module",
     "autoload": {
         "files": [

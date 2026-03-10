@@ -11,12 +11,19 @@ class Reset extends AbstractAction
      */
     public function execute()
     {
-        if ($this->config->isOPcacheEnabled()) {
-            $this->sendTextResponse(
-                opcache_reset() ? 'OPcache reset successfully' : 'OPcache reset failed'
-            );
+        $responseData = [];
+
+        if (!$this->config->isOPcacheInstalled()) {
+            $responseData['error'] = 'OPcache is not installed';
         } else {
-            $this->sendTextResponse('OPcache is not enabled');
+            $responseData['opcache'] = [
+                'enabled' => $this->config->isOPcacheEnabled(),
+                'reset' => opcache_reset(),
+                'restart_pending' => opcache_get_status(false)['restart_pending'] ?? null,
+                'restart_in_progress' => opcache_get_status(false)['restart_in_progress'] ?? null
+            ];
         }
+
+        $this->sendJsonResponse($responseData);
     }
 }

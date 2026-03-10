@@ -37,4 +37,12 @@ class Config
     {
         return (int)(opcache_get_status()['opcache_enabled'] ?? 0) === 1;
     }
+
+    /**
+     * 
+     */
+    public function isOPcacheInstalled(): bool
+    {
+        return function_exists('opcache_get_status');
+    }
 }

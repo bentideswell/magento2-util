@@ -11,6 +11,7 @@
                 <item name="db.query" xsi:type="object">FishPig\Util\Console\Command\Db\QueryCommand</item>
                 <item name="backup.db" xsi:type="object">FishPig\Util\Console\Command\Backup\DbCommand</item>
                 <item name="backup.media" xsi:type="object">FishPig\Util\Console\Command\Backup\MediaCommand</item>
+                <item name="media.images.prune" xsi:type="object">FishPig\Util\Console\Command\Media\Image\CleanCommand</item>
             </argument>
         </arguments>
     </type>
